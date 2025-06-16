@@ -8,34 +8,50 @@ using UnityEngine.Video;
 
 public class GazeTrigger : MonoBehaviour //Code von ChatGPT
 {
-    public float gazeTime = 2f; // Sekunden bis Aktivierung
+    public float gazeTime = 2f;
     public UnityEvent onGazeComplete;
     public ReticleGaze reticle;
     public VideoPlayer videoPlayer;
     public GameObject weltkugel;
+    
+    public AudioSource audioSource;
 
     private float timer = 0f;
     private bool isGazing = false;
+    private bool hasTriggered = false;
 
-
+    void Start()
+    {
+        if (weltkugel != null)
+        {
+            weltkugel.SetActive(true); // Weltkugel sicher aktivieren beim Start
+            Debug.Log("🌍 Weltkugel wurde im Start aktiviert");
+        }
+    }
 
     void Update()
     {
-        if (isGazing)
+        if (isGazing && !hasTriggered)
         {
             timer += Time.deltaTime;
 
             if (timer >= gazeTime)
             {
+                hasTriggered = true;
+                isGazing = false;
+                timer = 0f;
+
                 onGazeComplete.Invoke();
 
                 if (videoPlayer != null && !videoPlayer.isPlaying)
-                {
                     videoPlayer.Play();
-                }
 
-                timer = 0f;
-                isGazing = false;
+                if (audioSource != null && !audioSource.isPlaying)
+                    audioSource.Play();
+
+               
+                if (weltkugel != null)
+                    weltkugel.SetActive(false);
             }
         }
     }
@@ -44,6 +60,8 @@ public class GazeTrigger : MonoBehaviour //Code von ChatGPT
     {
         isGazing = true;
         timer = 0f;
+
+        Debug.Log("👁️ StartGaze wurde ausgelöst auf " + gameObject.name);
 
         if (reticle != null)
             reticle.SetGazing(true);
@@ -57,15 +75,4 @@ public class GazeTrigger : MonoBehaviour //Code von ChatGPT
         if (reticle != null)
             reticle.SetGazing(false);
     }
-
-    public void OnGazeComplete()
-    {
-        if (videoPlayer != null && !videoPlayer.isPlaying)
-        {
-            videoPlayer.Play();
-
-            if (weltkugel != null)
-                weltkugel.SetActive(false); // Weltkugel ausblenden, sobald Video startet
-        }
-    }    
 }

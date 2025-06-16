@@ -5,14 +5,26 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.29.0/Hello Cardboard/Scenes/HelloCardboard.unity
-    guid: 03c48c5e809944fa4afcae9973709f26
   - enabled: 1
     path: Assets/Scenes/IntroBaseCamp.unity
     guid: 0ec851ce14176904f8a515dd322a02ee
   - enabled: 1
-    path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.29.0/Hello Cardboard/Scenes/Klassenzimmer.unity
-    guid: 66f04902230e895439c08cbf4f444f61
+    path: Assets/Scenes/Klassenzimmer.unity
+    guid: 83056f06d0a878d40afaf4ba970d2187
+  - enabled: 1
+    path: Assets/Scenes/LupenMenu.unity
+    guid: 132b2391951f1a34d96a383a9b8b8f24
+  - enabled: 1
+    path: Assets/Scenes/Medien_Szene.unity
+    guid: 409932fcd79d64d4589f9b688faea345
+  - enabled: 1
+    path: Assets/Scenes/Schueler_Szene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Lehrer_Szene.unity
+    guid: 3b2755b6d97f879489c675abe9af590e
+  - enabled: 1
+    path: Assets/Scenes/Manipuliert_Szene.unity
+    guid: 50e0a6cdc0667524e8bf5f729e40bbe0
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a072e1822a1971b439f5d6097f1846d6, type: 2}

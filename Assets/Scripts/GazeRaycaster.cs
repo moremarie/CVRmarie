@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class GazeRaycaster : MonoBehaviour
 {
+    
     private GazeTrigger currentGazeTarget;
     private float maxDistance = 100f;
+
+    public ReticleGaze reticleGaze;
 
     void Update()
     {
         Camera cam = Camera.main;
-        if (cam == null) return; // verhindert NullReferenceException
+        if (cam == null) return;
 
         Ray ray = Application.isEditor
-            ? Camera.main.ScreenPointToRay(Input.mousePosition) //Fürs Testing in Game Mode
-            : new Ray(Camera.main.transform.position, Camera.main.transform.forward); //Für die APK
+            ? cam.ScreenPointToRay(Input.mousePosition)
+            : new Ray(cam.transform.position, cam.transform.forward);
 
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, maxDistance))
-
         {
             GazeTrigger gazeTarget = hit.collider.GetComponent<GazeTrigger>();
 
@@ -35,20 +37,25 @@ public class GazeRaycaster : MonoBehaviour
                     currentGazeTarget.StartGaze();
                 }
 
-                Debug.Log("🎯 Gaze erkannt auf: " + gazeTarget.name);
+                if (reticleGaze != null)
+                    reticleGaze.SetGazing(true);
             }
             else if (currentGazeTarget != null)
             {
                 currentGazeTarget.EndGaze();
                 currentGazeTarget = null;
+
+                if (reticleGaze != null)
+                    reticleGaze.SetGazing(false);
             }
         }
         else if (currentGazeTarget != null)
         {
             currentGazeTarget.EndGaze();
             currentGazeTarget = null;
+
+            if (reticleGaze != null)
+                reticleGaze.SetGazing(false);
         }
-
-
     }
-}    
+}
